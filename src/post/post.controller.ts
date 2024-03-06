@@ -19,8 +19,6 @@ export class PostController {
   @UseInterceptors(FileFieldsInterceptor([
     { name: 'images', maxCount: 10 },
   ]))
-
-
   async createPost(
     @Body() payload: createPostDto,
     @UploadedFiles() files: Express.Multer.File[]
@@ -28,20 +26,17 @@ export class PostController {
     return await this.postService.createPost(payload, files);
   }
 
-  @UseGuards(JwtGuard, RoleGuard)
   @Get()
   async getAllPosts(){
     return await this.postService.getAllPosts();
   }
 
-  @Roles(Role.ADMIN)
-  @UseGuards(JwtGuard, RoleGuard)
   @Get(':id')
   async getPostById(@Param('id') id: string){
     return await this.postService.getPostById(id);
   }
 
-  @Roles(Role.ADMIN)
+  @Roles(Role.USER)
   @UseGuards(JwtGuard, RoleGuard)
   @Put(':id')
   async updatePost(
@@ -51,7 +46,7 @@ export class PostController {
     return await this.postService.updatePost(id, payload);
   }
 
-  @Roles(Role.ADMIN)
+  @Roles(Role.USER)
   @UseGuards(JwtGuard, RoleGuard)
   @Delete(':id')
   async deletePost(@Param('id') id: string){
