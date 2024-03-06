@@ -1,4 +1,3 @@
-// cloudinary.service.ts
 
 import { Injectable } from '@nestjs/common';
 import { v2 as cloudinary } from 'cloudinary';
@@ -19,4 +18,16 @@ export class CloudinaryService {
       streamifier.createReadStream(file.buffer).pipe(uploadStream);
     });
   }
+
+  uploadMultipleFiles(files: Express.Multer.File[]): Promise<CloudinaryResponse[]> {
+    const uploadPromises: Promise<CloudinaryResponse>[] = [];
+
+    files.forEach(file => {
+      uploadPromises.push(this.uploadFile(file));
+    });
+
+    return Promise.all(uploadPromises);
+  }
 }
+
+

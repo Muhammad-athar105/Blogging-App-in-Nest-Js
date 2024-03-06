@@ -50,7 +50,7 @@ export class PostCategoryRepository {
       const deletedPostCategory = await this.prisma.category.delete({
         where: { id }
       });
-      return deletedPostCategory;
+      return "Category deleted";
     } catch (error) {
       throw error;
     }

@@ -1,31 +1,31 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsOptional, IsString } from "class-validator";
+import { PostImages } from "@prisma/client";
+import { IsNotEmpty, IsOptional, IsString, IsUUID } from "class-validator";
+import { PostImagesDto } from "./post-imagesDto";
 
-
-export class postCreateRequestDto {
-
-  @ApiProperty({ required: false })
-  @IsString()
-  @IsOptional()
-  title: string
+export class createPostDto {
 
   @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
-  description: string
+  title?: string;
 
   @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
-  userId: string
+  description?: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  userId: string;
 
   @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
-  categoryId: string
+  categoryId?: string;
 
   @ApiProperty({ required: false })
-  @IsString()
   @IsOptional()
-  commentId: string
+  images?: PostImagesDto[];
 }

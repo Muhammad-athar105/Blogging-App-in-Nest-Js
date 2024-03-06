@@ -17,16 +17,16 @@ export class CategoryController {
   @Roles(Role.ADMIN)
   @UseGuards(JwtGuard, RoleGuard)
   @Post()
-  @UseInterceptors(FileInterceptor('image', {
-    storage: diskStorage({
-      destination: "./uploads",
-      filename: (req, file, cb) => {
-        cb(null, file.originalname);
-      }
-    })
-  }))
-  async createPostCategory(@Body() payload: postCategoryRequestDto, @UploadedFile() file: Express.Multer.File) {
-    return await this.categoryService.createPostCategory(payload, file.filename);
+  @UseInterceptors(FileInterceptor('image'))
+  async createPostCategory(
+    @Body() payload: postCategoryRequestDto,
+    @UploadedFile() file: Express.Multer.File
+  ) {
+    try {
+      return await this.categoryService.createPostCategory(payload, file);
+    } catch (error) {
+      throw error;
+    }
   }
 
   @Roles(Role.ADMIN)
@@ -39,15 +39,24 @@ export class CategoryController {
   @Roles(Role.ADMIN)
   @UseGuards(JwtGuard, RoleGuard)
   @Get()
-  async findAllCategories(): Promise<Category[]> {
+  async findAllCategories() {
     return this.categoryService.findAllCategories();
   }
 
   @Roles(Role.ADMIN)
   @UseGuards(JwtGuard, RoleGuard)
   @Put(':id')
-  updatePostCategory(@Param('id') id: string, @Body() postCategoryData: postCategoryRequestDto) {
-    return this.categoryService.updatePostCategory(id, postCategoryData);
+  @UseInterceptors(FileInterceptor('image'))
+  async updateCategory(
+    @Param('id') id: string,
+    @Body() payload: postCategoryRequestDto,
+    @UploadedFile() file: Express.Multer.File
+  ) {
+    try {
+      return await this.categoryService.updatePostCategory(id, payload, file);
+    } catch (error) {
+      throw error;
+    }
   }
 
   @Roles(Role.ADMIN)
