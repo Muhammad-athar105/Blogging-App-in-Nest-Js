@@ -12,8 +12,7 @@ export class PostService {
     private readonly cloudinaryService: CloudinaryService,
   ) { }
 
-  async createPost(payload: createPostDto, files: Express.Multer.File[]){
-
+  async createPost(payload: createPostDto, files: Express.Multer.File[]) {
     let imageUrl;
     if (files && files.length > 0) {
       const uploadResponse = await this.cloudinaryService.uploadMultipleFiles(files);
@@ -31,13 +30,14 @@ export class PostService {
     return this.postRepository.createPost(postData);
   }
 
+
   // Get All posts
-  async getAllPosts(){
+  async getAllPosts() {
     return await this.postRepository.getAllPosts();
   }
 
   // Get By Id
-  async getPostById(id: string){
+  async getPostById(id: string) {
     const post = await this.postRepository.getPostById(id);
     if (!post) {
       throw new NotFoundException('Post not found');
@@ -46,7 +46,7 @@ export class PostService {
   }
 
   // update post
-  async updatePost(id: string, payload: createPostDto){
+  async updatePost(id: string, payload: createPostDto) {
     const post = await this.getPostById(id);
     return await this.postRepository.updatePost(post.id, payload);
   }

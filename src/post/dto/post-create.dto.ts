@@ -13,19 +13,19 @@ export class createPostDto {
   @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
-  description?: string;
+  description?: string; 
 
   @ApiProperty()
-  @IsString()
+  @IsUUID()
   @IsNotEmpty()
   userId: string;
 
   @ApiProperty({ required: false })
-  @IsString()
+  @IsUUID()
   @IsOptional()
   categoryId?: string;
 
   @ApiProperty({ required: false })
   @IsOptional()
-  images?: PostImagesDto[];
+  images: PostImagesDto[];
 }

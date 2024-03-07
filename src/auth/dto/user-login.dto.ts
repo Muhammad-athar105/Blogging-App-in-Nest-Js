@@ -3,6 +3,7 @@ import { Role } from "@prisma/client";
 import { IsEnum, IsNotEmpty, IsString } from "class-validator";
 
 export class userLoginRequestDto {
+  
   @ApiProperty({ required: true })
   @IsString()
   @IsNotEmpty()
@@ -12,13 +13,5 @@ export class userLoginRequestDto {
   @IsString()
   @IsNotEmpty()
   password: string;
-
-  @ApiProperty()
-  @IsEnum(Role, {
-    each: true,
-    message: 
-    'role must be a valid enum value. e.g: ADMIN, USER',
-  })
-  role: Role
 
 }

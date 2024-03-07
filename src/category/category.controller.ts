@@ -18,6 +18,7 @@ export class CategoryController {
   @UseGuards(JwtGuard, RoleGuard)
   @Post()
   @UseInterceptors(FileInterceptor('image'))
+
   async createPostCategory(
     @Body() payload: postCategoryRequestDto,
     @UploadedFile() file: Express.Multer.File
@@ -47,6 +48,7 @@ export class CategoryController {
   @UseGuards(JwtGuard, RoleGuard)
   @Put(':id')
   @UseInterceptors(FileInterceptor('image'))
+  
   async updateCategory(
     @Param('id') id: string,
     @Body() payload: postCategoryRequestDto,

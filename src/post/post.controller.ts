@@ -27,12 +27,12 @@ export class PostController {
   }
 
   @Get()
-  async getAllPosts(){
+  async getAllPosts() {
     return await this.postService.getAllPosts();
   }
 
   @Get(':id')
-  async getPostById(@Param('id') id: string){
+  async getPostById(@Param('id') id: string) {
     return await this.postService.getPostById(id);
   }
 
@@ -42,14 +42,14 @@ export class PostController {
   async updatePost(
     @Param('id') id: string,
     @Body() payload: createPostDto
-  ){
+  ) {
     return await this.postService.updatePost(id, payload);
   }
 
   @Roles(Role.USER)
   @UseGuards(JwtGuard, RoleGuard)
   @Delete(':id')
-  async deletePost(@Param('id') id: string){
+  async deletePost(@Param('id') id: string) {
     return await this.postService.deletePost(id);
   }
 }

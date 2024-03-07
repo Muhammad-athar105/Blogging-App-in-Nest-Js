@@ -17,10 +17,6 @@ export class AuthService {
 
   async signup(payload: UserSignupDto) {
     try {
-      if (!payload.email || !payload.password || !payload.username || !payload.firstName || !payload.lastName) {
-        throw new ForbiddenException('Please provide an email, usernam and password and other fileds');
-      }
-
       // Check if user with the given email or username already exists
       const existingUser = await this.authRepository.checkUserExistence(
         payload.email,

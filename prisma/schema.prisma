@@ -39,8 +39,8 @@ model User {
 
 model Post {
   id          String       @id @default(uuid())
-  title       String
-  description String
+  title       String?
+  description String?
   images      PostImages[]
   user        User         @relation(fields: [userId], references: [id])
   userId      String
@@ -49,6 +49,7 @@ model Post {
   comments    Comment[]
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
+
 }
 
 model PostImages {
@@ -56,6 +57,8 @@ model PostImages {
   url    String
   postId String
   post   Post   @relation(fields: [postId], references: [id])
+
+  @@map("post_images")
 }
 
 model Category {
@@ -65,6 +68,8 @@ model Category {
   posts     Post[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("post_category")
 }
 
 model Comment {
@@ -79,4 +84,6 @@ model Comment {
   replies     Comment[] @relation("parentTochild")
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+
+  @@map("post_comment")
 }
